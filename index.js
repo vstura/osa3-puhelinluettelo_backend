@@ -11,6 +11,9 @@ app.use(cors());
 // json-parser
 app.use(express.json());
 
+// Etsitään build-tiedostoa
+app.use(express.static('build'));
+
 // morgan middleware
 morgan.token('person', (req) => {
   const person = {
@@ -117,4 +120,4 @@ app.listen(PORT, () => {
 });
 
 // TEHTY
-// 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9,
+// 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10
