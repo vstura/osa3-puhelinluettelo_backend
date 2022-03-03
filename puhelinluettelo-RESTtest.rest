@@ -1,0 +1,15 @@
+#### HTTP GET
+GET http://localhost:3001/api/persons
+
+#### HTTP DELETE
+DELETE http://localhost:3001/api/persons/2
+
+#### HTTP POST
+POST  http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "id": "",
+  "name": "Dexter Morgan",
+  "number": "050-843793"
+}
