@@ -1,11 +1,10 @@
 // index.js (backend)
-
+require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 
 const app = express();
-
 app.use(cors());
 
 // json-parser
@@ -54,6 +53,8 @@ let persons = [
   },
 ];
 
+const Person = require('./models/person');
+
 // Näytetään etusivu
 app.get('/', (req, res) => {
   res.send('<h1>It is me, the puhelinluettelo!</h1>');
@@ -61,7 +62,9 @@ app.get('/', (req, res) => {
 
 // Näytetään ../persons-sivu
 app.get('/api/persons', (req, res) => {
-  res.json(persons);
+  Person.find({}).then((persons) => {
+    res.json(persons);
+  });
 });
 
 // Näytetään ../info-sivu
@@ -74,10 +77,9 @@ app.get('/info', (req, res) => {
 
 // Näytetään yksittäinen resurssi
 app.get('/api/persons/:id', (req, res) => {
-  const id = Number(req.params.id);
-  const person = persons.find((person) => person.id === id);
-  if (!person) res.status(404).end();
-  res.send(person);
+  Person.findById(req.params.id).then((person) => {
+    res.json(person);
+  });
 });
 
 // Poistetaan yksittäinen resurssi
@@ -88,36 +90,36 @@ app.delete('/api/persons/:id', (req, res) => {
 });
 
 // Lisätään yksittäinen resurssi
-const generateId = () => Math.floor(Math.random() * 10_000);
+// const generateId = () => Math.floor(Math.random() * 10_000);
 
 app.post('/api/persons', (req, res) => {
   const body = req.body;
-  const nameExists = persons.find(
-    (p) => p.name.toLowerCase() === body.name.toLowerCase()
-  );
+  // const nameExists = persons.find(
+  //   (p) => p.name.toLowerCase() === body.name.toLowerCase()
+  // );
 
   if (!body.name) return res.status(400).json({ error: 'Name is missing' });
 
   if (!body.number) return res.status(400).json({ error: 'Number is missing' });
 
-  if (nameExists) return res.status(400).json({ error: 'Name must be unique' });
+  // if (nameExists) return res.status(400).json({ error: 'Name must be unique' });
 
-  const person = {
-    id: generateId(),
+  const person = new Person({
+    // id: generateId(),
     name: body.name,
     number: body.number,
-  };
+  });
 
-  persons = persons.concat(person);
-
-  res.json(person);
+  person.save().then((savedPerson) => {
+    res.json(savedPerson);
+  });
 });
 
 // Palvelin kuittaa
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
 // TEHTY
-// 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10, 3.11
+// 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12, 3.13, 3.14
