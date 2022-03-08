@@ -11,5 +11,13 @@ Content-Type: application/json
 {
   "id": "",
   "name": "Dexter Morgan",
+  "number": "050-3439"
+}
+#### HTTP POST (too short)
+POST  http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "name": "De",
   "number": "050-843793"
 }
