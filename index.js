@@ -30,12 +30,12 @@ app.use(
 );
 
 // Näytetään etusivu
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.send('<h1>It is me, the puhelinluettelo!</h1>');
 });
 
 // Näytetään ../info-sivu
-app.get('/info', (req, res) => {
+app.get('/info', (_req, res) => {
   Person.find({}).then((result) => {
     res.send(
       `<p>Phonebook has info for ${result.length} people</p>
@@ -45,7 +45,7 @@ app.get('/info', (req, res) => {
 });
 
 // Näytetään ../persons-sivu
-app.get('/api/persons', (req, res) => {
+app.get('/api/persons', (_req, res) => {
   Person.find({}).then((persons) => {
     res.json(persons);
   });
@@ -110,14 +110,14 @@ app.put('/api/persons/:id', (req, res, next) => {
 
 // Virheiden käsittely middleware
 
-const unknownEndpoint = (req, res) => {
+const unknownEndpoint = (_req, res) => {
   res.status(404).send({ error: 'unknown endpoint' });
 };
 
 // Olemattomien osoitteiden käsittely
 app.use(unknownEndpoint);
 
-const errorHandler = (err, req, res, next) => {
+const errorHandler = (err, _req, res, next) => {
   console.log(err.message);
   if (err.name === 'CastError')
     return res.status(400).send({ error: 'malformatted id' });
@@ -139,4 +139,4 @@ app.listen(PORT, () => {
 });
 
 // TEHTY
-// 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12, 3.13, 3.14, 3.15, 3.16, 3.17, 3.18, 3.19
+// 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12, 3.13, 3.14, 3.15, 3.16, 3.17, 3.18, 3.19, 3.20, 3.21, 3.22
