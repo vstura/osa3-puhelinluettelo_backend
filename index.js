@@ -128,11 +128,10 @@ const errorHandler = (err, _req, res, next) => {
   next(err);
 };
 
-// Virheellisten pyyntöjen käsittely. T
+// Virheellisten pyyntöjen käsittely.
 app.use(errorHandler);
 
 // Palvelin kuittaa
-// eslint-disable-next-line no-undef
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
